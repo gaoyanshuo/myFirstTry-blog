@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticPagesController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\SessionController;
 //Auth::routes();
 //
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -27,3 +27,9 @@ Route::resource('users', UsersController::class);
 //show
 
 Route::get('/users/{user}', [UsersController::class,'show'])->name('users.show');
+
+//login-logout
+
+Route::get('login', [SessionController::class,'create'])->name('login');
+Route::post('login', [SessionController::class,'store'])->name('login');
+Route::delete('logout', [SessionController::class,'logout'])->name('logout');
