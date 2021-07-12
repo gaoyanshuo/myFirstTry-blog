@@ -9,3 +9,7 @@ use App\Http\Controllers\StaticPagesController;
 Route::get('/',[StaticPagesController::class,'home']);
 Route::get('/help',[StaticPagesController::class,'help']);
 Route::get('/about',[StaticPagesController::class,'about']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
