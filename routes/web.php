@@ -8,6 +8,8 @@ use App\Http\Controllers\UsersController;
 //
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+
 //homepage
 
 Route::get('/',[StaticPagesController::class,'home'])->name('home');
@@ -18,3 +20,10 @@ Route::get('/about',[StaticPagesController::class,'about'])->name('about');
 
 Route::get('/signup',[UsersController::class,'create'])->name('signup');
 
+//user_CRUD
+
+Route::resource('users', UsersController::class);
+
+//show
+
+Route::get('/users/{user}', [UsersController::class,'show'])->name('users.show');
