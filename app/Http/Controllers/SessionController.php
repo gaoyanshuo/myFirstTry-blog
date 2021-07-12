@@ -26,6 +26,12 @@ class SessionController extends Controller
             session()->flash('danger','邮箱或密码不正确');
             return redirect()->back()->withInput();
         }
+    }
 
+    public function destory()
+    {
+        Auth::logout();
+        session()->flash('success','退出成功');
+        return redirect()->route('login');
     }
 }
