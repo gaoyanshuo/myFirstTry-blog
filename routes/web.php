@@ -33,3 +33,7 @@ Route::get('/users/{user}', [UsersController::class,'show'])->name('users.show')
 Route::get('login', [SessionController::class,'create'])->name('login');
 Route::post('login', [SessionController::class,'store'])->name('login');
 Route::delete('logout', [SessionController::class,'destory'])->name('logout');
+
+//token
+
+Route::get('signup/confirm/{token}',[UsersController::class,'confirmEmail'])->name('confirm_email');

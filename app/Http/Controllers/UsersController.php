@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -12,7 +15,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth',[
-            'except' => 'create','show','store','index'
+            'except' => ['create','show','store','index','confirmEmail']
         ]);
 
         $this->middleware('guest',[
@@ -43,9 +46,38 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
+
+        //调用成员方法，传参
+
+        $this->sendEmailConfirmationTo($user);
+        session()->flash('success','账号激活的邮件已发送至您的邮箱，请注意查收');
+        return redirect('/');
+    }
+
+    protected function sendEmailConfirmationTo($user)
+    {
+        $view = 'email.confirm';
+        $data = ['user' => $user];
+        $from = 'gys9388@gmail.com';
+        $name = 'Gao';
+        $to = $user->email;
+        $subject = '感谢您注册Gao App,请确认您的邮箱';
+
+        Mail::send($view,$data,function ($message) use ($from,$name,$to,$subject) {
+            $message->from($from,$name)->to($to)->subject($subject);
+        });
+    }
+
+    public function confirmEmail($token)
+    {
+        $user = User::where('activation_token', $token)->firstOrFail();
+        $user->activated = true;
+        $user->activation_token = null;
+        $user->save();
+
         Auth::login($user);
-        session()->flash('success','注册成功');
-        return redirect()->route('users.show',[$user]);
+        session()->flash('success','恭喜您，账号激活成功');
+        return redirect()->route('users.show',['user' => $user]);
     }
 
     public function edit(User $user)
@@ -87,4 +119,6 @@ class UsersController extends Controller
         session()->flash('success','删除成功');
         return back();
     }
+
+
 }
