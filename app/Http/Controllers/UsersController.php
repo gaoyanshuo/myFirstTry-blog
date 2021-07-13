@@ -12,7 +12,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth',[
-            'except' => 'create','show','store'
+            'except' => 'create','show','store','index'
         ]);
 
         $this->middleware('guest',[
@@ -72,6 +72,11 @@ class UsersController extends Controller
         session()->flash('success','个人信息更新成功');
 
         return redirect()->route('users.show', $user);
+    }
 
+    public function index()
+    {
+        $users = User::paginate(10);
+        return view('users.index', ['users' => $users]);
     }
 }
