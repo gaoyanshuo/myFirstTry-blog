@@ -63,13 +63,12 @@ class UsersController extends Controller
     {
         $view = 'email.confirm';
         $data = ['user' => $user];
-        $from = 'gys9388@gmail.com';
-        $name = 'Gao';
+
         $to = $user->email;
         $subject = '感谢您注册Gao App,请确认您的邮箱';
 
-        Mail::send($view,$data,function ($message) use ($from,$name,$to,$subject) {
-            $message->from($from,$name)->to($to)->subject($subject);
+        Mail::send($view,$data,function ($message) use ($to,$subject) {
+            $message->to($to)->subject($subject);
         });
     }
 
