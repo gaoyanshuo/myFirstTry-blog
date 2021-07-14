@@ -11,7 +11,7 @@
         @if ($statuses->count() > 0)
           <ul class="list-unstyled">
             @foreach ($statuses as $status)
-              @include('statuses._statuses')
+              @include('statuses._status')
             @endforeach
           </ul>
           <div class="mt-5">
