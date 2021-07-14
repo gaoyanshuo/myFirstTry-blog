@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,14 @@ class StatusesController extends Controller
         Auth::user()->statuses()->create(['content' => $request->post('content')]);
 
         session()->flash('success','发布信息成功');
+        return redirect()->back();
+    }
+
+    public function destroy(Status $status)
+    {
+        $this->authorize('destroy', $status);
+        $status->delete();
+        session()->flash('success','删除成功');
         return redirect()->back();
     }
 }
