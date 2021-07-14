@@ -70,4 +70,39 @@ class User extends Authenticatable
     {
         return $this->statuses()->orderByDesc('created_at');
     }
+
+    //获取粉丝关系列表
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class,'followers','user_id','followers_id');
+    }
+
+    //获取用户关注人列表
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class,'followers','followers_id','user_id');
+    }
+
+    //关注
+
+    public function follow($user_id)
+    {
+        $this->followings()->sync(['user_id' => $user_id], false);
+    }
+
+    //取关
+
+    public function unfollow($user_id)
+    {
+        $this->followings()->detach(['user_id' => $user_id]);
+    }
+
+    //判断是否关注
+
+    public function is_following($user_id)
+    {
+        return $this->followings->contains($user_id);
+    }
 }
