@@ -5,7 +5,7 @@ use App\Http\Controllers\StaticPagesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PasswordController;
-
+use App\Http\Controllers\StatusesController;
 //Auth::routes();
 //
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -46,3 +46,7 @@ Route::get('/password/reset',[PasswordController::class,'showLinkRequestForm'])-
 Route::post('/password/email',[PasswordController::class,'sendResetLinkEmail'])->name('password.email');
 Route::get('/password/reset/{token}',[PasswordController::class,'showResetForm'])->name('password.reset');
 Route::post('/password/reset',[PasswordController::class,'reset'])->name('password.update');
+
+//statuses
+
+Route::resource('statuses', StatusesController::class,['only' => ['store','destroy']]);
