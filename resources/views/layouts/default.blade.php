@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>@yield('title', 'Gao App') - MyLaravel </title>
-  <link rel="stylesheet" href="/css/app.css">
+  <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
   @include('layouts._header')
