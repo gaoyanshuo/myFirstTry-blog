@@ -15,7 +15,7 @@
         "laravel/ui": "^3.3",
         "overtrue/laravel-lang": "~4.0",
         "twbs/bootstrap": "5.0.2",
-        "fzaninotto/faker": "1.9.*"
+
     },
     "require-dev": {
         "facade/ignition": "^2.5",
