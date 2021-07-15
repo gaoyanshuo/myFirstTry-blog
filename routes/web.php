@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\StatusesController;
+use App\Http\Controllers\FollowersController;
 //Auth::routes();
 //
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -46,3 +47,7 @@ Route::resource('statuses', StatusesController::class,['only' => ['store','destr
 //获取关注数,粉丝数
 Route::get('/user/{user}/following',[UsersController::class,'followings'])->name('users.followings');
 Route::get('/user/{user}/followers',[UsersController::class,'followers'])->name('users.followers');
+
+//添加关注，取消关注
+Route::post('/user/followers/{user}',[FollowersController::class,'store'])->name('followers.store');
+Route::delete('user/follwers/{user}',[FollowersController::class,'destroy'])->name('followers.destroy');
